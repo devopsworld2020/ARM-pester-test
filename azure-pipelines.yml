@@ -3,3 +3,8 @@ trigger:
 
 pool:
   vmImage: 'Ubuntu-16.04'
+  
+- task: Pester@8  
+   inputs:    
+   scriptFolder: '@{Path=''$(System.DefaultWorkingDirectory)\AzureBatch\armTemplateTest.ps1'';parameters=@{templatePath=''$(System.DefaultWorkingDirectory)\AzureBatch\storageAccountTemplate.json''}}'
+   
