@@ -11,6 +11,6 @@ pool:
 
 - task: Pester@10
   inputs:
-    scriptFolder: '@{Path=''$(System.DefaultWorkingDirectory)\AzureBatch\armTemplateTest.ps1'';parameters=@{templatePath=''$(System.DefaultWorkingDirectory)\*.json''}}'
+    scriptFolder: '$(System.DefaultWorkingDirectory)\*'
     resultsFile: '$(System.DefaultWorkingDirectory)\Test-Pester.XML'
     usePSCore: False
