@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-  - task: richardfennellBM.BM-VSTS-PesterRunner-Task.Pester-Task.Pester@7
+  - task: richardfennellBM.BM-VSTS-PesterRunner-Task.Pester-Task.Pester@10
     displayName: 'Pester Test - Module'
     inputs:
       scriptFolder: '@{Path=''$(System.DefaultWorkingDirectory)\AzureBatch\armTemplateTest.ps1'';parameters=@{templatePath=''$(System.DefaultWorkingDirectory)\*.json''}}'
