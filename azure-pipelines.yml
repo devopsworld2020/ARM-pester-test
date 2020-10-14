@@ -10,8 +10,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: Pester@10
-  inputs:
-    scriptFolder: '$(System.DefaultWorkingDirectory)'
-    resultsFile: '$(System.DefaultWorkingDirectory)\Test-Pester.XML'
-    usePSCore: False
+  - task: richardfennellBM.BM-VSTS-PesterRunner-Task.Pester-Task.Pester@7
+    displayName: 'Pester Test - Module'
+    inputs:
+      scriptFolder: '@{Path=''$(System.DefaultWorkingDirectory)\AzureBatch\armTemplateTest.ps1'';parameters=@{templatePath=''$(System.DefaultWorkingDirectory)\*.json''}}'
+      resultsFile: '$(System.DefaultWorkingDirectory)\Test-Pester.XML'
+      usePSCore: False
