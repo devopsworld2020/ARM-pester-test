@@ -5,8 +5,14 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-- task: PublishTestResults@2
+- task: Pester@10
   inputs:
     scriptFolder: '@{Path=''$(System.DefaultWorkingDirectory)\tests\ARMTemplate\Test.ARMTemplate.ps1''; Parameters=@{TemplatePath =''$(System.DefaultWorkingDirectory)\azuredeploy.json''; parameters =$(parameters); variables = $(variables); functions = $(functions); resources = $(resources); outputs = $(outputs)}}'
-    resultsFile: '$(System.DefaultWorkingDirectory)\TEST-ARMTemplate.XML'
+    resultsFile: '$(System.DefaultWorkingDirectory)\TEST-Pester.XML'
     usePSCore: False
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'NUnit'
+    testResultsFiles: '$(System.DefaultWorkingDirectory)\TEST-Pester.XML'
+  condition: always()
