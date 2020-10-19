@@ -5,11 +5,13 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-  - task: richardfennellBM.BM-VSTS-PesterRunner-Task.Pester-Task.Pester@7
-    displayName: 'Pester Test - Functions'
+  - task: richardfennellBM.BM-VSTS-PesterRunner-Task.Pester-Task.Pester@8
+    displayName: 'Pester Test Runner - Network Template'
     inputs:
-      scriptFolder: 'hashtable @{Path="$(System.DefaultWorkingDirectory)\tests\Test.ARMTemplate.ps1";Parameters=@{TemplatePath ='$(System.DefaultWorkingDirectory)\azuredeploy.json'
-      resultsFile: '$(System.DefaultWorkingDirectory)\Test-Pester.XML'
-      ForceUseOfPesterInTasks: true
-    enabled: false
-
+      scriptFolder: '@{Path=''$(System.DefaultWorkingDirectory)\tests\Test.ARMTemplate.ps1''; Parameters=@{TemplatePath =''$(System.DefaultWorkingDirectory)\azuredeploy.json''; parameters =$(hubParameters); variables = $(hubVariables); resources = $(hubResources)}}'
+      resultsFile: '$(System.DefaultWorkingDirectory)\TEST-Hub-Network.xml'
+	  
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results **/TEST-*.xml'
+    inputs:
+      testResultsFormat: NUnit
