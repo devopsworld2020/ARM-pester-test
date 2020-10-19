@@ -1,12 +1,3 @@
-# Starter pipeline
-- task: Pester Powershell unittest@2
-  inputs:
-    ItemSpec: '*.tests.ps1'
-    FailOnError: true
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
@@ -14,9 +5,8 @@ pool:
   vmImage: 'windows-latest'
 
 steps:
-  - task: richardfennellBM.BM-VSTS-PesterRunner-Task.Pester-Task.Pester@10
-    displayName: 'Pester Test - Module'
-    inputs:
-      scriptFolder: '@{Path=''$(System.DefaultWorkingDirectory)\AzureBatch\armTemplateTest.ps1'';parameters=@{templatePath=''$(System.DefaultWorkingDirectory)\*.json''}}'
-      resultsFile: '$(System.DefaultWorkingDirectory)\Test-Pester.XML'
-      usePSCore: False
+- task: Pester@10
+  inputs:
+    scriptFolder: '@{Path=''$(System.DefaultWorkingDirectory)\tests\ARMTemplate\Test.ARMTemplate.ps1''; Parameters=@{TemplatePath =''$(System.DefaultWorkingDirectory)\azuredeploy.json''; parameters =$(parameters); variables = $(variables); functions = $(functions); resources = $(resources); outputs = $(outputs)}}'
+    resultsFile: '$(System.DefaultWorkingDirectory)\TEST-ARMTemplate.XML'
+    usePSCore: False
